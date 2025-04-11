@@ -6,6 +6,8 @@
                 "${workspaceFolder}/**",
                 "/usr/include",
                 "/usr/include/wx-3.2",
+                "/usr/include/mysql",
+                "/usr/include/mysql++",
                 "/usr/lib/x86_64-linux-gnu/wx/include/gtk3-unicode-3.2"
             ],
             "defines": [],
