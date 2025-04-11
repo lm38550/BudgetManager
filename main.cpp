@@ -21,12 +21,14 @@ public:
 private:
     void OnHello(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
+    void OnOther(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 };
  
 enum
 {
-    ID_Hello = 1
+    ID_Hello = 1,
+    ID_Other = 2
 };
  
 wxIMPLEMENT_APP(MyApp);
@@ -47,11 +49,16 @@ MyFrame::MyFrame()
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
  
+    wxMenu *menuOther = new wxMenu;
+    menuOther->Append(ID_Other, "&Some other");
+    menuOther->Append(ID_Other, "&Some other again");
+
     wxMenu *menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
  
     wxMenuBar *menuBar = new wxMenuBar;
     menuBar->Append(menuFile, "&File");
+    menuBar->Append(menuOther, "&Other");
     menuBar->Append(menuHelp, "&Help");
  
     SetMenuBar( menuBar );
@@ -61,6 +68,7 @@ MyFrame::MyFrame()
  
     Bind(wxEVT_MENU, &MyFrame::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
+    Bind(wxEVT_MENU, &MyFrame::OnOther, this, ID_Other);
     Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
 }
  
@@ -73,6 +81,11 @@ void MyFrame::OnAbout(wxCommandEvent& event)
 {
     wxMessageBox("This is a wxWidgets Hello World example",
                  "About Hello World", wxOK | wxICON_INFORMATION);
+}
+
+void MyFrame::OnOther(wxCommandEvent& event)
+{
+    wxMessageBox("This is another Text");
 }
  
 void MyFrame::OnHello(wxCommandEvent& event)
