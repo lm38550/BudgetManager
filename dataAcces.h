@@ -28,7 +28,7 @@ public:
      * @param NameAcc RETURNED List of the Name of an account
      * @param Balance RETURNED List of Balance of the account
      */
-    void getAccountList(vector<int> & IDacc, vector<string> & NameAcc, vector<int> & Balance);
+    void getAccountList(vector<int> & IDacc, vector<string> & NameAcc, vector<float> & Balance);
     
     /**
      * @brief Acces to all the content of Budget Table

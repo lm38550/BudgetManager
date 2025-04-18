@@ -77,14 +77,42 @@ dataAcces::dataAcces() {
     cout << TestingDB() << endl;
 }
 
-void dataAcces::getAccountList(vector<int> & IDacc, vector<string> & NameAcc, vector<int> & Balance)
+void dataAcces::getAccountList(vector<int> & IDacc, vector<string> & NameAcc, vector<float> & Balance)
 {
-    cout << "NOT DEFINED YET" << endl;
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT * FROM Accounts");
+    CloseDB(db);
+
+    IDacc.clear();
+    NameAcc.clear();
+    Balance.clear();
+    for(int i = 0 ; i < data.size() ; i++) {
+        IDacc.push_back(stoi(data[i][0]));
+        NameAcc.push_back(data[i][1]);
+        Balance.push_back(stof(data[i][2]));
+    }
 }
 
-void dataAcces::getBudgetList(vector<int> & Year,  vector<int> & Month, vector<int> & Cat, vector<float> & Amount, vector<float> & Used)
+void dataAcces::getBudgetList(vector<int> & Year, vector<int> & Month, vector<int> & Cat, vector<float> & Amount, vector<float> & Used)
 {
-    cout << "NOT DEFINED YET" << endl;
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT * FROM Budget");
+    CloseDB(db);
+
+    Year.clear();
+    Month.clear();
+    Cat.clear();
+    Amount.clear();
+    Used.clear();
+    for(int i = 0 ; i < data.size() ; i++) {
+        Year.push_back(stoi(data[i][0]));
+        Month.push_back(stoi(data[i][1]));
+        Cat.push_back(stoi(data[i][2]));
+        Amount.push_back(stof(data[i][3]));
+        Used.push_back(stof(data[i][4]));
+    }
 }
 
 void dataAcces::getCategoryList(vector<int> & IDcat, vector<string> & NameCat)
@@ -96,7 +124,7 @@ void dataAcces::getCategoryList(vector<int> & IDcat, vector<string> & NameCat)
 
     IDcat.clear();
     NameCat.clear();
-    for(int i = 0 ; i < 4 ; i++) {
+    for(int i = 0 ; i < data.size() ; i++) {
         IDcat.push_back(stoi(data[i][0]));
         NameCat.push_back(data[i][1]);
     }
@@ -104,5 +132,27 @@ void dataAcces::getCategoryList(vector<int> & IDcat, vector<string> & NameCat)
 
 void dataAcces::getHistoryList(vector<int> & IDope, vector<int> & Year, vector<int> & Month, vector<int> & Day, vector<int> & Acc, vector<int> & Cat, vector<float> & Amount, vector<string> & Comment)
 {
-    cout << "NOT DEFINED YET" << endl;
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT * FROM History");
+    CloseDB(db);
+
+    IDope.clear();
+    Year.clear();
+    Month.clear();
+    Day.clear();
+    Acc.clear();
+    Cat.clear();
+    Amount.clear();
+    Comment.clear();
+    for(int i = 0 ; i < data.size() ; i++) {
+        IDope.push_back(stoi(data[i][0]));
+        Year.push_back(stoi(data[i][1]));
+        Month.push_back(stoi(data[i][2]));
+        Day.push_back(stoi(data[i][3]));
+        Acc.push_back(stoi(data[i][4]));
+        Cat.push_back(stoi(data[i][5]));
+        Amount.push_back(stof(data[i][6]));
+        Comment.push_back(data[i][7]);
+    }
 }
