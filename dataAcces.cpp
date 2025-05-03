@@ -30,7 +30,7 @@ sqlite3* dataAcces::OpenDB() {
 void dataAcces::CloseDB(sqlite3* db) {
     if (db != nullptr) {
         sqlite3_close(db);
-        cout << "Data base succefully closed / Base de données fermée avec succès." << endl;
+        cout << "Data base succefully closed / Base de données fermée avec succès.\n" << endl;
     }
 }
 
@@ -44,8 +44,6 @@ vector<vector<string>> dataAcces::SearchInDB(sqlite3* db, const std::string& SQL
                   << sqlite3_errmsg(db) << std::endl;
         return result;
     }
-
-    std::cout << "Résultats de la requête :\n";
 
     // Boucle sur les lignes du résultat
     while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -76,6 +74,10 @@ string dataAcces::TestingDB() {
 dataAcces::dataAcces() {
     cout << TestingDB() << endl;
 }
+
+// --------------------------------------------------------------------------------
+// -------------------- Acces to all the content of each table --------------------
+// --------------------------------------------------------------------------------
 
 void dataAcces::getAccountList(vector<int> & IDacc, vector<string> & NameAcc, vector<float> & Balance)
 {
@@ -155,4 +157,38 @@ void dataAcces::getHistoryList(vector<int> & IDope, vector<int> & Year, vector<i
         Amount.push_back(stof(data[i][6]));
         Comment.push_back(data[i][7]);
     }
+}
+
+// --------------------------------------------------------------------------------
+// --------------------------- Acces to Account content ---------------------------
+// --------------------------------------------------------------------------------
+
+float dataAcces::getAccountBalanceByID(int ID)
+{
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT Balance FROM Accounts WHERE IDAccount = " + to_string(ID) + ";");
+    CloseDB(db);
+
+    return stof(data[0][0]);
+}
+
+string dataAcces::getAccountNameByID(int ID)
+{
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT Name FROM Accounts WHERE IDAccount = " + to_string(ID) + ";");
+    CloseDB(db);
+
+    return data[0][0];
+}
+
+int dataAcces::getAccountIDByName(string Name)
+{
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT IDaccount FROM Accounts WHERE Name = '" + Name + "';");
+    CloseDB(db);
+
+    return stoi(data[0][0]);
 }
