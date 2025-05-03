@@ -3,6 +3,7 @@
 // For compilers that support precompilation, includes "wx/wx.h".
 #include <wx/wxprec.h>
 #include "dataAcces.h"
+#include <iostream>
  
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
@@ -107,8 +108,16 @@ void MyFrame::OnTest(wxCommandEvent& event)
     vector<int> IDcat;
     vector<string> NameCat;
     data.getCategoryList(IDcat, NameCat);
-    data.getAccountBalanceByID(1);
-    data.getAccountIDByName("Test2");
-    data.getAccountNameByID(1);
-    
+
+    for (int i = 0; i < 0; i++) {
+        std::cout << i << " IDcat = " << IDcat[i] << ", Namecat = " << NameCat[i];
+    }
+
+    std::cout << "Balance = " << data.getAccountBalanceByID(1) << std::endl;
+    std::cout << "Account Name = " << data.getAccountIDByName("Test2") << std::endl;
+    std::cout << "Account Name = " << data.getAccountNameByID(1) << std::endl;
+
+    float Balance, Used;
+    data.getBudgetByYMC(2024, 2, 2, Balance, Used);
+    std::cout << "Balance = " << Balance << ", Used = " << Used << ", Remaining = " << Balance-Used << std::endl;
 }

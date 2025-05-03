@@ -192,3 +192,17 @@ int dataAcces::getAccountIDByName(string Name)
 
     return stoi(data[0][0]);
 }
+
+// --------------------------------------------------------------------------------
+// --------------------------- Acces to Budget content ----------------------------
+// --------------------------------------------------------------------------------
+
+void dataAcces::getBudgetByYMC(int Year, int Month, int Cat, float & Amount, float & Used) {
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT Amount, Used FROM Budget WHERE Year = " + to_string(Year) + " AND Month = " + to_string(Month) + " AND Category = " + to_string(Cat) + ";");
+    CloseDB(db);
+
+    Amount = stof(data[0][0]);
+    Used = stof(data[0][1]);
+}
