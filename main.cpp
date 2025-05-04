@@ -114,10 +114,13 @@ void MyFrame::OnTest(wxCommandEvent& event)
     }
 
     std::cout << "Balance = " << data.getAccountBalanceByID(1) << std::endl;
-    std::cout << "Account Name = " << data.getAccountIDByName("Test2") << std::endl;
+    std::cout << "Account ID = " << data.getAccountIDByName("Test2") << std::endl;
     std::cout << "Account Name = " << data.getAccountNameByID(1) << std::endl;
 
     float Balance, Used;
     data.getBudgetByYMC(2024, 2, 2, Balance, Used);
     std::cout << "Balance = " << Balance << ", Used = " << Used << ", Remaining = " << Balance-Used << std::endl;
+
+    std::cout << "Category Name = " << data.getCategoryNameByID(1) << std::endl;
+    std::cout << "Category ID = " << data.getCategoryIDByName("Jeu") << std::endl;
 }

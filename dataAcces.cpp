@@ -206,3 +206,25 @@ void dataAcces::getBudgetByYMC(int Year, int Month, int Cat, float & Amount, flo
     Amount = stof(data[0][0]);
     Used = stof(data[0][1]);
 }
+
+// --------------------------------------------------------------------------------
+// -------------------------- Acces to Category content ---------------------------
+// --------------------------------------------------------------------------------
+
+string dataAcces::getCategoryNameByID(int ID) {
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT name FROM Categories WHERE IDCategory = " + to_string(ID) + ";");
+    CloseDB(db);
+
+    return data[0][0];
+}
+
+int dataAcces::getCategoryIDByName(string Name) {
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT IDCategory FROM Categories WHERE name = '" + Name + "';");
+    CloseDB(db);
+
+    return stoi(data[0][0]);
+}
