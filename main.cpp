@@ -91,4 +91,5 @@ void MyFrame::OnOther(wxCommandEvent& event)
 void MyFrame::OnHello(wxCommandEvent& event)
 {
     wxLogMessage("Hello world from wxWidgets!");
+    
 }
