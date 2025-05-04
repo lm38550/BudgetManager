@@ -123,4 +123,10 @@ void MyFrame::OnTest(wxCommandEvent& event)
 
     std::cout << "Category Name = " << data.getCategoryNameByID(1) << std::endl;
     std::cout << "Category ID = " << data.getCategoryIDByName("Jeu") << std::endl;
+
+    int Year, Month, Day, Acc, Cat;
+    float Amount;
+    string Comment;
+    data.getHistoryByID(1, Year, Month, Day, Acc, Cat, Amount, Comment);
+    std::cout << "Year = " << Year << ", Month = " << Month << ", Day = " << Day << ", Acc = " << Acc << ", Cat = " << Cat << ", Amount = " << Amount << ", Comment = " << Comment << endl;
 }

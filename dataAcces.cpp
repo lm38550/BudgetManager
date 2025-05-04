@@ -228,3 +228,22 @@ int dataAcces::getCategoryIDByName(string Name) {
 
     return stoi(data[0][0]);
 }
+
+// --------------------------------------------------------------------------------
+// --------------------------- Acces to History content ---------------------------
+// --------------------------------------------------------------------------------
+
+void dataAcces::getHistoryByID(int ID, int & Year, int & Month, int & Day, int & Acc, int & Cat, float & Amount, string & Comment) {
+    sqlite3* db;
+    db = OpenDB();
+    vector<vector<string>> data = SearchInDB(db, "SELECT * FROM History WHERE OperationID = " + to_string(ID) + ";");
+    CloseDB(db);
+
+    Year = stoi(data[0][1]);
+    Month = stoi(data[0][2]);
+    Day = stoi(data[0][3]);
+    Acc = stoi(data[0][4]);
+    Cat = stoi(data[0][5]);
+    Amount = stof(data[0][6]);
+    Comment = data[0][7];
+}
