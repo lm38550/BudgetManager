@@ -7,18 +7,22 @@ Date de publication v2 : EN COURS
 
 ⚠️ LA v1 EST OBSOLETE NE PAS UTILISER ⚠️  
 
-## 🔧 Languages et logiciels utilisés pour le développement
+## 🔧 Languages, bibliothèques et logiciels utilisés pour le développement
 
 v1  
-Python
-SQL
+Python  
+tkinter  
+SQL  
 
-v2
-C++
-SQL
+v2  
+C++  
+wxWidgets  
+SQL  
 
 ## 🧠 Compétences étudiés
 
-- Utilisation du système MVC (Modele - Vue - Controleur)
-- Intégration et communication avec une base de donnée SQL
-- Création d'un site internet pour la manipulation / visualisation des données
+- Création et administration de Bade de données.
+- Création d'une interface accessive et intuitive.
+- Application des concepts de programmation concurrente pour sécuriser l'accès aux données.
+- Fonctions de calculs sur les données pour créer des moyennes, statistiques, etc.
+- EN COURS : Amélioration de la modulabilité du logiciel.
