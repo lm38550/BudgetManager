@@ -2,7 +2,7 @@
 TARGET = budget
 
 # Fichiers sources
-SRC = main.cpp dataAcces.cpp
+SRC = main.cpp dataAcces.cpp pages/accounts_edit.cpp
 
 # wxWidgets compile & link flags
 WX_CXXFLAGS = $(shell wx-config --cxxflags)
