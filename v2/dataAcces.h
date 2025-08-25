@@ -1,17 +1,21 @@
 #ifndef DATA_ACCES
 #define DATA_ACCES
-#include <mysql++.h>
 #include <vector>
+#include <sqlite3.h>
+#include <string>
 
 using namespace std;
 
 class dataAcces
 {
 private:
-    /* data */
+    const string DB_PATH = "./dataBase.db";
+    sqlite3* OpenDB();
+    void CloseDB(sqlite3* db);
+    vector<vector<string>> SearchInDB(sqlite3* db, const std::string& SQLrequest);
+    string TestingDB();
 public:
-    dataAcces(/* args */);
-    ~dataAcces();
+    dataAcces();
 
 // --------------------------------------------------------------------------------
 // -------------------- Acces to all the content of each table --------------------
@@ -24,7 +28,7 @@ public:
      * @param NameAcc RETURNED List of the Name of an account
      * @param Balance RETURNED List of Balance of the account
      */
-    void dataAcces::getAccountList(vector<int> & IDacc, vector<string> & NameAcc, vector<int> & Balance);
+    void getAccountList(vector<int> & IDacc, vector<string> & NameAcc, vector<float> & Balance);
     
     /**
      * @brief Acces to all the content of Budget Table
@@ -35,7 +39,7 @@ public:
      * @param Amount RETURNED List of Amount of money allowed to a budget
      * @param Used   RETURNED List of money already Used on that budget
      */
-    void dataAcces::getBudgetList(vector<int> & Year,  vector<int> & Month, vector<int> & Cat, vector<float> & Amount, vector<float> & Used);
+    void getBudgetList(vector<int> & Year,  vector<int> & Month, vector<int> & Cat, vector<float> & Amount, vector<float> & Used);
 
     /**
      * @brief Acces to all the content of Category Table
@@ -43,20 +47,21 @@ public:
      * @param IDcat   RETURNED List of IDCategory
      * @param NameCat RETURNED List of the Name of a category
      */
-    void dataAcces::getCategoryList(vector<int> & IDcat, vector<string> & NameCat);
+    void getCategoryList(vector<int> & IDcat, vector<string> & NameCat);
     
     /**
      * @brief Acces to all the content of History Table
      *
-     * @param IDope  RETURNED List of OperationID
-     * @param Year   RETURNED List of Year linked to an operation
-     * @param Month  RETURNED List of Month linked to an operation
-     * @param Day    RETURNED List of Day linked to an operation
-     * @param Acc    RETURNED List of Account linked to an operation
-     * @param Cat    RETURNED List of Category linked to an operation
-     * @param Amount RETURNED List of Amount linked to an operation
+     * @param IDope   RETURNED List of OperationID
+     * @param Year    RETURNED List of Year linked to an operation
+     * @param Month   RETURNED List of Month linked to an operation
+     * @param Day     RETURNED List of Day linked to an operation
+     * @param Acc     RETURNED List of Account linked to an operation
+     * @param Cat     RETURNED List of Category linked to an operation
+     * @param Amount  RETURNED List of Amount linked to an operation
+     * @param Comment RETURNED List of Comments linked to an operation
      */
-    void dataAcces::getHistoryList(vector<int> & IDope, vector<int> & Year, vector<int> & Month, vector<int> & Day, vector<int> & Acc, vector<int> & Cat, vector<float> & Amount);
+    void getHistoryList(vector<int> & IDope, vector<int> & Year, vector<int> & Month, vector<int> & Day, vector<int> & Acc, vector<int> & Cat, vector<float> & Amount, vector<string> & Comment);
 
 // --------------------------------------------------------------------------------
 // --------------------------- Acces to Account content ---------------------------
@@ -69,7 +74,7 @@ public:
      *
      * @return Return the amount of money on that account
      */
-    float dataAcces::getAccountBalanceByID(int ID);
+    float getAccountBalanceByID(int ID);
 
     /**
      * @brief Acces to the name of an account by its ID
@@ -78,7 +83,7 @@ public:
      *
      * @return Return the Name of that account
      */
-    string dataAcces::getAccountNameByID(int ID);
+    string getAccountNameByID(int ID);
 
     /**
      * @brief Acces to the ID of an account by its Name
@@ -87,7 +92,7 @@ public:
      *
      * @return Return the ID of that account
      */
-    int dataAcces::getAccountIDByName(string Name);
+    int getAccountIDByName(string Name);
 
 // --------------------------------------------------------------------------------
 // --------------------------- Acces to Budget content ----------------------------
@@ -101,10 +106,8 @@ public:
      * @param Cat    category of the budget to search
      * @param Amount RETURNED Initial amount of money on the budget
      * @param Used   RETURNED Amount of Used money on the budget
-     *
-     * @return Return the amount of money on that account
      */
-    void dataAcces::getBudgetByYMC(int Year, int Month, int Cat, float & Amount, float & Used);
+    void getBudgetByYMC(int Year, int Month, int Cat, float & Amount, float & Used);
 
 // --------------------------------------------------------------------------------
 // -------------------------- Acces to Category content ---------------------------
@@ -117,7 +120,7 @@ public:
      *
      * @return Return the Name of that Category
      */
-    string dataAcces::getCategoryNameByID(int ID);
+    string getCategoryNameByID(int ID);
 
     /**
      * @brief Acces to the ID of an Category by its Name
@@ -126,7 +129,25 @@ public:
      *
      * @return Return the ID of that Category
      */
-    int dataAcces::getCategoryIDByName(string Name);
+    int getCategoryIDByName(string Name);
+
+// --------------------------------------------------------------------------------
+// --------------------------- Acces to History content ---------------------------
+// --------------------------------------------------------------------------------
+
+    /**
+     * @brief Acces to all the operation information by its ID
+     * 
+     * @param ID      ID of the operation
+     * @param Year    RETURNED Year of the operation
+     * @param Month   RETURNED Month of the operation
+     * @param Day     RETURNED Day of the operation
+     * @param Acc     RETURNED Account of the operation
+     * @param Cat     RETURNED Category of the operation
+     * @param Amount  RETURNED Amount of the operation
+     * @param Comment RETURNED Comment of the operation
+     */
+    void getHistoryByID(int ID, int & Year, int & Month, int & Day, int & Acc, int & Cat, float & Amount, string & Comment);
 };
 
 #endif
