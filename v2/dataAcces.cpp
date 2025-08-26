@@ -61,6 +61,21 @@ vector<vector<string>> dataAcces::SearchInDB(sqlite3* db, const std::string& SQL
     return result;
 }
 
+bool dataAcces::ExecuteQuery(sqlite3* db, const std::string& SQLrequest) {
+    char* errMsg = nullptr;
+    int rc = sqlite3_exec(db, SQLrequest.c_str(), nullptr, nullptr, &errMsg);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Erreur lors de l'exécution de la requête : "
+                  << (errMsg ? errMsg : sqlite3_errmsg(db)) << std::endl;
+        sqlite3_free(errMsg);
+        return false;
+    }
+
+    std::cout << "Requête exécutée avec succès." << std::endl;
+    return true;
+}
+
 string dataAcces::TestingDB() {
     sqlite3* db;
     db = OpenDB();
@@ -191,6 +206,18 @@ int dataAcces::getAccountIDByName(string Name)
     CloseDB(db);
 
     return stoi(data[0][0]);
+}
+
+// --------------------------------------------------------------------------------
+// ------------------------------ Set Account content -----------------------------
+// --------------------------------------------------------------------------------
+
+void dataAcces::CreateNewAccount(string Name)
+{
+    sqlite3* db;
+    db = OpenDB();
+    bool query = ExecuteQuery(db, "INSERT INTO Accounts (Name, Balance) VALUES ('" + Name + "', 0.00)");
+    CloseDB(db);
 }
 
 // --------------------------------------------------------------------------------

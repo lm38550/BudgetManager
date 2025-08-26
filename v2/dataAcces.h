@@ -13,6 +13,7 @@ private:
     sqlite3* OpenDB();
     void CloseDB(sqlite3* db);
     vector<vector<string>> SearchInDB(sqlite3* db, const std::string& SQLrequest);
+    bool ExecuteQuery(sqlite3* db, const std::string& SQLrequest)
     string TestingDB();
 public:
     dataAcces();
@@ -95,6 +96,21 @@ public:
     int getAccountIDByName(string Name);
 
 // --------------------------------------------------------------------------------
+// ------------------------------ Set Account content -----------------------------
+// --------------------------------------------------------------------------------
+
+    /**
+     * @brief Create a NEW Account
+     * 
+     * @param Name Name of the Account to create
+     */
+    void CreateNewAccount(string Name);
+
+    void DeleteAccount(string Name);
+
+    void SetAccountBalance(string Name, float Amount);
+
+// --------------------------------------------------------------------------------
 // --------------------------- Acces to Budget content ----------------------------
 // --------------------------------------------------------------------------------
 
@@ -148,6 +164,12 @@ public:
      * @param Comment RETURNED Comment of the operation
      */
     void getHistoryByID(int ID, int & Year, int & Month, int & Day, int & Acc, int & Cat, float & Amount, string & Comment);
+
+    // --------------------------------------------------------------------------------
+    // ------------------------------ Set History content -----------------------------
+    // --------------------------------------------------------------------------------
+
+    void CreateNewOP(int Year, int Month, int Day, int Acc, int Cat, float Amount, string Comment);
 };
 
 #endif
