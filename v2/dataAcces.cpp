@@ -212,7 +212,7 @@ int dataAcces::getAccountIDByName(string Name)
 // ------------------------------ Set Account content -----------------------------
 // --------------------------------------------------------------------------------
 
-void dataAcces::CreateNewAccount(string Name)
+void dataAcces::CreateAccount(string Name)
 {
     sqlite3* db;
     db = OpenDB();

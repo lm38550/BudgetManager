@@ -104,7 +104,7 @@ public:
      * 
      * @param Name Name of the Account to create
      */
-    void CreateNewAccount(string Name);
+    void CreateAccount(string Name);
 
     void DeleteAccount(string Name);
 
@@ -169,7 +169,9 @@ public:
     // ------------------------------ Set History content -----------------------------
     // --------------------------------------------------------------------------------
 
-    void CreateNewOP(int Year, int Month, int Day, int Acc, int Cat, float Amount, string Comment);
+    void CreateOP(int Year, int Month, int Day, int Acc, int Cat, float Amount, string Comment);
+
+    void DeleteOP(int ID);
 };
 
 #endif
