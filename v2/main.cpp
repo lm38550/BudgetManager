@@ -99,7 +99,8 @@ void MyFrame::OnOther(wxCommandEvent& event)
  
 void MyFrame::OnHello(wxCommandEvent& event)
 {
-    wxLogMessage("Hello world from wxWidgets!");    
+    wxLogMessage("Hello world from wxWidgets!");
+    
 }
 
 void MyFrame::OnTest(wxCommandEvent& event)
