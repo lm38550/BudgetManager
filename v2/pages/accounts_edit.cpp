@@ -1,20 +1,55 @@
 #include "accounts_edit.h"
-#include "../dataAcces.h"
-#include <wx/wx.h>
-#include <wx/listctrl.h>
 #include <vector>
 #include <string>
 #include <wx/gbsizer.h>
 #include <wx/panel.h>
 
+dataAcces DA;
+
 AccountsEdit::AccountsEdit(wxWindow* parent)
-    : wxFrame(parent, wxID_ANY, "Deuxième page", wxDefaultPosition, wxSize(300, 200))
+    : wxFrame(parent, wxID_ANY, "Gestion des comptes", wxDefaultPosition, wxSize(300, 200))
 {
-    new wxStaticText(this, wxID_ANY, "Bienvenue sur la deuxième page !", 
-                     wxPoint(20, 20));
+    
+    LoadDisplay();
+
+}
+
+auto AccountsEdit::FullfilList(wxPanel* panel) {
+
+    auto list_accounts = new wxListCtrl(panel, wxID_ANY, wxDefaultPosition,
+                                        wxSize(300,200),
+                                        wxLC_REPORT | wxLC_SINGLE_SEL);
+
+    // Ajout d'une colonne
+    list_accounts->InsertColumn(0, "Nom du compte", wxLIST_FORMAT_LEFT);
+
+    vector<int> a;
+    vector<string> name_accounts;
+    vector<float> b;
+
+    DA.getAccountList(a, name_accounts, b);
+
+    long index = 0;
+    for (const auto& nom : name_accounts) {
+        list_accounts->InsertItem(index, nom);
+        index++;
+    }
+
+    // Ajustement dynamique lors du resize
+    list_accounts->Bind(wxEVT_SIZE, [list_accounts](wxSizeEvent& event) {
+        int totalWidth = list_accounts->GetClientSize().GetWidth();
+        list_accounts->SetColumnWidth(0, totalWidth - 4); // -4 pour éviter la barre de scroll
+        event.Skip();
+    });
+
+    // Initialisation de la largeur
+    list_accounts->SetColumnWidth(0, list_accounts->GetClientSize().GetWidth() - 4);
+
+    return list_accounts;
+}
 
 
-
+void AccountsEdit::LoadDisplay() {
     const auto margin = FromDIP(10);
 
     auto mainSizer = new wxBoxSizer(wxVERTICAL);
@@ -22,31 +57,23 @@ AccountsEdit::AccountsEdit(wxWindow* parent)
 
     auto sizer = new wxGridBagSizer(margin, margin);
 
-    vector<pair<wxGBPosition,wxGBSpan>> items = {
-            {{0,0},{5,1}},
-            {{5,0},{1,1}},
-            {{0,1},{1,1}},
-            {{1,1},{1,1}},
-            {{2,1},{1,1}},
-            {{3,1},{1,1}},
-            {{4,1},{1,1}},
-            {{5,1},{1,1}}};
+    sizer->Add(FullfilList(panel), {0,0}, {5,1}, wxEXPAND);
+    
+    auto TextLabel = new wxTextCtrl(panel,wxID_ANY);
+    sizer->Add(TextLabel, {5,0}, {1,1}, wxEXPAND);
 
-    for (auto &item : items) {
-        auto initialSize = sizer->GetEmptyCellSize() * 2;
+    auto UpButton = new wxButton(panel, wxID_ANY, "/\\");
+    sizer->Add(UpButton, {1,1}, {1,1}, wxEXPAND);
 
-        if (item.first == wxGBPosition(1,1)) {
-            initialSize.SetWidth(FromDIP(150));
-        }
-        if (item.first == wxGBPosition(0,0)) {
-            initialSize.SetWidth(FromDIP(250));
-        }
+    auto SuppButton = new wxButton(panel, wxID_ANY, "Supprimer");
+    sizer->Add(SuppButton, {2,1}, {1,1}, wxEXPAND);
 
-        auto p = new wxPanel(panel, wxID_ANY, wxDefaultPosition, initialSize);
-        p->SetBackgroundColour(wxColour(100, 100, 200));
+    auto DownButton = new wxButton(panel, wxID_ANY, "\\/");
+    sizer->Add(DownButton, {3,1}, {1,1}, wxEXPAND);
 
-        sizer->Add(p, item.first, item.second, wxEXPAND);
-    }
+    auto AddButton = new wxButton(panel, wxID_ANY, "Ajouter");
+    sizer->Add(AddButton, {5,1}, {1,1}, wxEXPAND);
+
 
     sizer->AddGrowableCol(0);
 
@@ -57,32 +84,4 @@ AccountsEdit::AccountsEdit(wxWindow* parent)
 
     mainSizer->Add(panel, 1, wxEXPAND | wxALL, margin);
     this->SetSizerAndFit(mainSizer);
-
-
-    /* PARTIE DE CREATION DE LISTE
-
-    wxListCtrl* list_accounts = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 
-                                              wxLC_REPORT | wxLC_SINGLE_SEL);
-
-    // Ajout d'une colonne
-        list_accounts->InsertColumn(0, "Nom", wxLIST_FORMAT_LEFT, 200);
-
-    dataAcces DA;
-
-    vector<int> a;
-    vector<string> name_accounts;
-    vector<float> b;
-
-    DA.getAccountList(a,name_accounts,b);
-
-    long index = 0;
-        for (const auto& nom : name_accounts) {
-            list_accounts->InsertItem(index, nom);
-            index++;
-        }
-
-    */
-
 }
-
-
