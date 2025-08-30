@@ -13,7 +13,7 @@ private:
     sqlite3* OpenDB();
     void CloseDB(sqlite3* db);
     vector<vector<string>> SearchInDB(sqlite3* db, const std::string& SQLrequest);
-    bool ExecuteQuery(sqlite3* db, const std::string& SQLrequest)
+    bool ExecuteQuery(sqlite3* db, const std::string& SQLrequest);
     string TestingDB();
 public:
     dataAcces();
@@ -126,6 +126,14 @@ public:
     void getBudgetByYMC(int Year, int Month, int Cat, float & Amount, float & Used);
 
 // --------------------------------------------------------------------------------
+// ------------------------------ Set Budget content ------------------------------
+// --------------------------------------------------------------------------------
+
+    void SetMonthlyBudget(int Year, int Month, int Cat, float Amount);
+
+    void CreateBudget();
+
+// --------------------------------------------------------------------------------
 // -------------------------- Acces to Category content ---------------------------
 // --------------------------------------------------------------------------------
 
@@ -146,6 +154,14 @@ public:
      * @return Return the ID of that Category
      */
     int getCategoryIDByName(string Name);
+
+// --------------------------------------------------------------------------------
+// ----------------------------- Set Category content -----------------------------
+// --------------------------------------------------------------------------------
+
+    void CreateCategory(string Name);
+
+    void DeleteCategory(string Name);
 
 // --------------------------------------------------------------------------------
 // --------------------------- Acces to History content ---------------------------
