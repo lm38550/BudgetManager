@@ -131,7 +131,11 @@ public:
 
     void SetMonthlyBudget(int Year, int Month, int Cat, float Amount);
 
-    void CreateBudget();
+    void UseBudget(int Cat, float Amount);
+
+    void CreateBudget(int Cat, float Amount);
+
+    void DeleteBudget(int Cat);
 
 // --------------------------------------------------------------------------------
 // -------------------------- Acces to Category content ---------------------------
