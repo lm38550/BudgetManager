@@ -13,6 +13,7 @@ private:
     sqlite3* OpenDB();
     void CloseDB(sqlite3* db);
     vector<vector<string>> SearchInDB(sqlite3* db, const std::string& SQLrequest);
+    bool ExecuteQuery(sqlite3* db, const std::string& SQLrequest);
     string TestingDB();
 public:
     dataAcces();
@@ -95,6 +96,32 @@ public:
     int getAccountIDByName(string Name);
 
 // --------------------------------------------------------------------------------
+// ------------------------------ Set Account content -----------------------------
+// --------------------------------------------------------------------------------
+
+    /**
+     * @brief Create a NEW Account
+     * 
+     * @param Name Name of the Account to create
+     */
+    void CreateAccount(string Name);
+
+    /**
+     * @brief Delete an Account
+     * 
+     * @param Name Name of the Account to delete
+     */
+    void DeleteAccount(string Name);
+
+    /**
+     * @brief Update an account's balance
+     * 
+     * @param Name   Name of the Account to credit/debit
+     * @param Amount Amount to change on the account (+/-)
+     */
+    void SetAccountBalance(string Name, float Amount);
+
+// --------------------------------------------------------------------------------
 // --------------------------- Acces to Budget content ----------------------------
 // --------------------------------------------------------------------------------
 
@@ -108,6 +135,41 @@ public:
      * @param Used   RETURNED Amount of Used money on the budget
      */
     void getBudgetByYMC(int Year, int Month, int Cat, float & Amount, float & Used);
+
+// --------------------------------------------------------------------------------
+// ------------------------------ Set Budget content ------------------------------
+// --------------------------------------------------------------------------------
+
+    /**
+     * @brief Calcul the new budget for the next month
+     * 
+     * @param Cat    Category of the budget
+     * @param Amount Initial amount for the next month
+     */
+    void SetMonthlyBudget(int Cat, float Amount);
+
+    /**
+     * @brief Take money off from a Budget
+     * 
+     * @param Cat    Category of the budget to take money off
+     * @param Amount Amount of money to take off the budget
+     */
+    void UseBudget(int Cat, float Amount);
+
+    /**
+     * @brief Create a new budget
+     * 
+     * @param Cat    Category of the budget to create
+     * @param Amount Initial amount of money for the new budget
+     */
+    void CreateBudget(int Cat, float Amount);
+
+    /**
+     * @brief Delete a budget
+     * 
+     * @param Cat Category of the budget to delete
+     */
+    void DeleteBudget(int Cat);
 
 // --------------------------------------------------------------------------------
 // -------------------------- Acces to Category content ---------------------------
@@ -132,6 +194,24 @@ public:
     int getCategoryIDByName(string Name);
 
 // --------------------------------------------------------------------------------
+// ----------------------------- Set Category content -----------------------------
+// --------------------------------------------------------------------------------
+
+    /**
+     * @brief Create a new category
+     * 
+     * @param Name Name of the category to create
+     */
+    void CreateCategory(string Name);
+
+    /**
+     * @brief Delete a category
+     * 
+     * @param ID ID of the category to delete
+     */
+    void DeleteCategory(int ID);
+
+// --------------------------------------------------------------------------------
 // --------------------------- Acces to History content ---------------------------
 // --------------------------------------------------------------------------------
 
@@ -148,6 +228,30 @@ public:
      * @param Comment RETURNED Comment of the operation
      */
     void getHistoryByID(int ID, int & Year, int & Month, int & Day, int & Acc, int & Cat, float & Amount, string & Comment);
+
+    // --------------------------------------------------------------------------------
+    // ------------------------------ Set History content -----------------------------
+    // --------------------------------------------------------------------------------
+
+    /**
+     * @brief Create an Operation
+     * 
+     * @param Year    Year the operation was created
+     * @param Month   Month the operation was created
+     * @param Day     Day the operation was created
+     * @param Acc     Account on which the operation has been done
+     * @param Cat     Category of the operation
+     * @param Amount  Amount of money of the operation
+     * @param Comment Comment on the operation
+     */
+    void CreateOP(int Year, int Month, int Day, int Acc, int Cat, float Amount, string Comment);
+
+    /**
+     * @brief Delete an Operation
+     * 
+     * @param ID ID of the operation to be deleted
+     */
+    void DeleteOP(int ID);
 };
 
 #endif
