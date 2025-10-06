@@ -4,6 +4,7 @@
 #include <wx/wxprec.h>
 #include "dataAcces.h"
 #include <iostream>
+#include "pages/accounts_edit.h"
  
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
@@ -25,6 +26,7 @@ public:
 private:
     void OnTest(wxCommandEvent& event);
     void OnHello(wxCommandEvent& event);
+    void OnAccountsEdit(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnOther(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
@@ -34,7 +36,8 @@ enum
 {
     ID_Hello = 1,
     ID_Other = 2,
-    ID_Test = 3
+    ID_Test = 3,
+    ID_Account_Edit = 1000
 };
  
 wxIMPLEMENT_APP(MyApp);
@@ -56,6 +59,9 @@ MyFrame::MyFrame()
                      "Testing app functions");
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
+
+    wxMenu *menuConfig = new wxMenu;
+    menuConfig->Append(ID_Account_Edit, "&Accounts Edit", "Window for editing your different accounts.");
  
     wxMenu *menuOther = new wxMenu;
     menuOther->Append(ID_Other, "&Some other");
@@ -66,6 +72,7 @@ MyFrame::MyFrame()
  
     wxMenuBar *menuBar = new wxMenuBar;
     menuBar->Append(menuFile, "&File");
+    menuBar->Append(menuConfig, "&Config");
     menuBar->Append(menuOther, "&Other");
     menuBar->Append(menuHelp, "&Help");
  
@@ -76,6 +83,7 @@ MyFrame::MyFrame()
  
     Bind(wxEVT_MENU, &MyFrame::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &MyFrame::OnTest, this, ID_Test);
+    Bind(wxEVT_MENU, &MyFrame::OnAccountsEdit, this, ID_Account_Edit);
     Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MyFrame::OnOther, this, ID_Other);
     Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
@@ -101,6 +109,11 @@ void MyFrame::OnHello(wxCommandEvent& event)
 {
     wxLogMessage("Hello world from wxWidgets!");
     
+}
+
+void MyFrame::OnAccountsEdit(wxCommandEvent& event) {
+    AccountsEdit* acc_edt_frame = new AccountsEdit(this);
+    acc_edt_frame->Show(true);
 }
 
 void MyFrame::OnTest(wxCommandEvent& event)
