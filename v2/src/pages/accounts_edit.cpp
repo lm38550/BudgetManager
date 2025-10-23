@@ -35,10 +35,10 @@ auto AccountsEdit::FullfilList(wxPanel* panel) {
     list_accounts->InsertColumn(0, "Nom du compte", wxLIST_FORMAT_LEFT);
 
     // Récupère les comptes dans la base de donnée
-    vector<int> a;
+    vector<int> account_IDs;
     vector<string> name_accounts;
-    vector<float> b;
-    DA.getAccountList(a, name_accounts, b);
+    vector<float> balance;
+    DA.getAccountList(account_IDs, name_accounts, balance);
 
     // Rempli la liste
     long index = 0;
